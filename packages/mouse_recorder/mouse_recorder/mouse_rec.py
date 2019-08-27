@@ -4,6 +4,7 @@ import sys
 from pymouse import PyMouse
 import re
 import time
+from mouse_recorder.config import config
 
 
 def progress_bar(current_value, max_value):
@@ -24,6 +25,7 @@ def _get_last_number_file(files, regex_pattern):
         last_file_number = last_file_number if last_file_number >= file_number else file_number
     return last_file_number
 
+
 def _increment_filename(path='.', filename='file', ext='txt', max_digit=6):
     """
     """
@@ -43,7 +45,7 @@ def _increment_filename(path='.', filename='file', ext='txt', max_digit=6):
     return new_complete_path
 
 
-def run_mouse_recorder(username='Default', username_dataset=False):
+def run_mouse_recorder(username='Default', username_dataset=False, max_iterations=-1):
     """
     """
     filename_template = 'record_{}'.format(username)
@@ -55,22 +57,24 @@ def run_mouse_recorder(username='Default', username_dataset=False):
         if not os.path.exists('./dataset'):
             os.makedirs('./dataset')
         dataset_path = './dataset/'
+
     mouse = PyMouse()
     run = 0
-    N = 10
-    while True:
+    N = config.POINT_PER_FILE
+
+    while max_iterations < 0 or run < max_iterations:
         print('Recording run {}'.format(run))
-        record_filename = _increment_filename(path=dataset_path, filename=filename_template, max_digit=4)
+        record_filename = _increment_filename(path=dataset_path, filename=filename_template, max_digit=max_iterations)
         run += 1
 
         with open(record_filename, 'w') as rf:
             for index in range(N):
                 x, y = mouse.position()
                 rf.write('{},{}'.format(x,y))
-                time.sleep(0.01)
+                time.sleep(config.SLEEP_TIME)
                 progress_bar(index, N)
 
         print()
 
 if __name__ == '__main__':
-    run_mouse_recorder(username=sys.argv[1], username_dataset=False)
+    run_mouse_recorder(username=sys.argv[1], username_dataset=config.USERNAME_DATASET, max_iterations=config.MAX_ITERATIONS)

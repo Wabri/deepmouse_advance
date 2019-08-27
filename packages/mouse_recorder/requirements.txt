@@ -1,0 +1,4 @@
+pkg-resources==0.0.0
+python-xlib==0.25
+PyUserInput==0.1.11
+six==1.12.0
