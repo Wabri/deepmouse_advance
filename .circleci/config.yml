@@ -9,7 +9,7 @@ setup_venv: &setup_venv
   run:
     name: Create Venv
     command: |
-      ./scripts/setup_venv.sh
+      sh scripts/setup_venv.sh
 
 jobs:
   test_mouse_recorder:
