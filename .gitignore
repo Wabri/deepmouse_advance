@@ -1,3 +1,6 @@
+# Remove temp file of vim
+*.sw*
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
