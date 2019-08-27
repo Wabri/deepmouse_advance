@@ -13,7 +13,7 @@ setup_venv: &setup_venv
 
 jobs:
   test_mouse_recorder:
-    <<: *default
+    <<: *defaults
     steps:
       - checkout
       - *setup_venv
