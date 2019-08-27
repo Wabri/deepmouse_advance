@@ -1,0 +1,37 @@
+version: 2
+
+defaults: &defaults
+  docker:
+    - image: circleci/python:3.7.2
+  working_directory: ~/project
+
+setup_venv: &setup_venv
+  run:
+    name: Create Venv
+    command: |
+      ./scripts/setup_venv.sh
+
+jobs:
+  test_mouse_recorder:
+    <<: *default
+    steps:
+      - checkout
+      - *setup_venv
+      - run:
+          name: Install Requirements
+          command: |
+            source env/bin/activate
+            pip install -r packages/mouse_recorder/requirements.txt
+      - run:
+          name: Try to run
+          command: |
+            source env/bin/activate
+            PYTHONPATH=./packages/mouse_recorder python3 packages/mouse_recorder/mouse_recorder/mouse_rec.py test
+
+workflows:
+  version: 2
+  test-all:
+    jobs:
+      - test_mouse_recorder
+
+
