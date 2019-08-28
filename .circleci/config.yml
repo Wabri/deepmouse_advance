@@ -10,7 +10,9 @@ setup_venv: &setup_venv
     name: Create Venv
     command: |
       chmod +x scripts/setup_venv.sh
-      ./scripts/setup_venv.sh
+      python3 -m venv env
+      . env/bin/activate
+      pip3 install --upgrade pip
 
 jobs:
   test_mouse_recorder:
