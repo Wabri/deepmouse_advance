@@ -21,7 +21,7 @@ echo 'Intall requirements of mouse_recorder'
 pip install -r $package_path/requirements.txt
 echo $separator
 echo 'Run mouse_recorder with python3 and 2 arguments'
-PYTHONPATH=./packages/mouse_recorder python3 $main_file $2 $3
+PYTHONPATH=./$package_path python3 $main_file $2 $3
 echo $separator
 echo 'Deactivate environment'
 deactivate
