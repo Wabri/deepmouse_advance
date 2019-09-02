@@ -3,7 +3,7 @@
 block_cipher = None
 
 
-a = Analysis(['../packages/mouse_recorder/mouse_recorder/mouse_rec.py'],
+a = Analysis(['mouse_recorder/mouse_rec.py'],
              pathex=['env/lib/python3.7/site-packages/', '/home/gab/git/deepmouse_advance'],
              binaries=[],
              datas=[],
