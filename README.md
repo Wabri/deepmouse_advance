@@ -31,3 +31,13 @@ This executable file take 2 argument:
 mouse_rec.run <username> [<total_itaration>]
 ```
 
+### Development
+
+#### On Linux
+
+In the root run the source command:
+
+```Bash
+source scripts/development_setup/source.sh
+```
+
