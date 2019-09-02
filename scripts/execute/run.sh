@@ -2,9 +2,9 @@
 
 separator=-------------------------
 
-package_path=packages/mouse_recorder
+package_path=packages/$1
 environment_path=$package_path/env
-main_file=$package_path/mouse_recorder/mouse_rec.py
+main_file=$package_path/$1/run.py
 
 echo $separator
 echo 'Setting up virtual environment'
@@ -21,7 +21,7 @@ echo 'Intall requirements of mouse_recorder'
 pip install -r $package_path/requirements.txt
 echo $separator
 echo 'Run mouse_recorder with python3 and 2 arguments'
-PYTHONPATH=./$package_path python3 $main_file $1 $2
+PYTHONPATH=./$package_path python3 $main_file $2 $3
 echo $separator
 echo 'Deactivate environment'
 deactivate

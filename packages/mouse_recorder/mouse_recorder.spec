@@ -3,7 +3,7 @@
 block_cipher = None
 
 
-a = Analysis(['mouse_recorder/mouse_rec.py'],
+a = Analysis(['mouse_recorder/run.py'],
              pathex=['env/lib/python3.7/site-packages/', '/home/gab/git/deepmouse_advance'],
              binaries=[],
              datas=[],
@@ -23,7 +23,7 @@ exe = EXE(pyz,
           a.zipfiles,
           a.datas,
           [],
-          name='mouse_rec',
+          name='mouse_recorder',
           debug=False,
           bootloader_ignore_signals=False,
           strip=False,
