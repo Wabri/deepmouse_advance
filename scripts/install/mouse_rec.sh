@@ -13,4 +13,6 @@ echo 'Remove Useless files and folders'
 rm -rf build dist
 echo 'Create mouse_rec executable'
 pyinstaller --onefile packages/mouse_recorder/mouse_rec.spec
+echo 'Deactivate virtual environment'
+deactivate
 
