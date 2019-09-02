@@ -1,7 +1,7 @@
 # Deep Mouse Advance
 ## An example of machine learning production system
 
-***Dependencies: Python3.* and Pip***
+***Dependencies: Python3.4 (or higher) and Pip***
 
 ### Run Mouse_recorder
 
