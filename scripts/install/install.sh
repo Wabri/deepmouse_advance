@@ -1,9 +1,13 @@
 #!/bin/sh
 
+# Arg 1: name of the package to install
+# Arg 2: name of the output file
+
 separator=-------------------------
 
-package_path=packages/mouse_recorder
+package_path=packages/$1
 environment_path=$package_path/env
+spec_file=$package_path/$1.spec
 
 echo $separator
 echo 'Setting up virtual environment'
@@ -26,7 +30,7 @@ echo 'Remove Useless files and folders'
 rm -rf build dist
 echo $separator
 echo 'Create mouse_rec executable'
-pyinstaller --onefile $package_path/mouse_rec.spec
+pyinstaller --onefile $spec_file
 echo $separator
 echo 'Deactivate virtual environment'
 deactivate
@@ -35,8 +39,8 @@ echo 'Remove environment'
 rm -rf $environment_path
 echo $separator
 echo 'Remove build and move executable'
-rm -rf mouse_rec.run
-mv dist/mouse_rec ./mouse_rec.run
+rm -rf $2.run
+mv dist/$1 ./$2.run
 rm -rf build dist
 
 echo $separator
