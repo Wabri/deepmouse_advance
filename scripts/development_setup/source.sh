@@ -1,15 +1,16 @@
 #!/bin/sh
 
-separator=-------------------------
+_sep_echo(){
+	echo '---------------------------'
+	echo $1
+}
 
 environment_path=./venv
 scripts_path=./scripts
 
-echo $separator
-echo 'Deactivate precedent environment'
+_sep_echo 'Deactivate precedent environment'
 deactivate
-echo $separator
-echo 'Setting up virtual environment'
+_sep_echo 'Setting up virtual environment'
 rm -rf $environment_path
 python3 -m venv $environment_path
 echo $separator
