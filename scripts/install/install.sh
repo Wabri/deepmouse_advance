@@ -19,7 +19,7 @@ _sep_echo 'Activate environment'
 . $environment_path/bin/activate
 _sep_echo 'Upgrade pip'
 pip install --upgrade pip
-_sep_echo 'Install requirements of mouse_recorder'
+_sep_echo 'Install requirements of '$1
 pip install -r $package_path/requirements.txt
 _sep_echo 'Install pyinstaller'
 pip install pyinstaller

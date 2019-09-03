@@ -1,8 +1,5 @@
 #!/bin/sh
 
-# Arg 1: name of the package to run
-# Arg 2: arguments if necessary
-
 _sep_echo(){
 	echo '---------------------------'
 	echo $1
