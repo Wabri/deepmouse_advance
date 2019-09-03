@@ -6,7 +6,6 @@ import re
 import time
 from mouse_recorder.config import config
 
-
 def _progress_bar(current_value, max_value):
     """
     """
@@ -29,7 +28,7 @@ def _get_last_number_file(files, regex_pattern):
 def _increment_filename(path='.', filename='file', ext='txt', max_digit=6):
     """
     """
-    files = glob(os.path.join(path, filename + '_*' + ext))
+    files = glob(os.path.join(path, filename + '*' + ext))
     regex_pattern = '(?<=)(\d+)(?=\.{}$)'.format(ext)
     new_complete_path = ''
     ext = '.' + ext
@@ -40,12 +39,12 @@ def _increment_filename(path='.', filename='file', ext='txt', max_digit=6):
         new_count = '0' * (max_digit - len(new_file_number)) + new_file_number
         new_complete_path = re.sub(regex_pattern, new_count, files[0])
     else:
-        new_complete_path = os.path.join(path, filename + '_' + ('0' * max_digit) + ext)
+        new_complete_path = os.path.join(path, filename + ('0' * max_digit) + ext)
 
     return new_complete_path
 
 
-def run_mouse_recorder(*, username, max_iterations, point_per_file, sleep_time):
+def run_mouse_recorder(*, username, filename_template, max_iterations, point_per_file, sleep_time):
     """
     """
     if not os.path.exists('./dataset/{}'.format(username)):
@@ -59,7 +58,7 @@ def run_mouse_recorder(*, username, max_iterations, point_per_file, sleep_time):
 
     while max_iterations < 0 or run < max_iterations:
         print('Recording run {}'.format(run))
-        record_filename = _increment_filename(path=dataset_path, max_digit=len(str(max_iterations)))
+        record_filename = _increment_filename(path=dataset_path, filename=filename_template, max_digit=len(str(max_iterations)))
         run += 1
 
         with open(record_filename, 'w') as rf:
@@ -78,6 +77,7 @@ if __name__ == '__main__':
         max_iterations = config.MAX_ITERATIONS
         point_per_file = config.POINT_PER_FILE
         sleep_time = config.SLEEP_TIME
+        filename_template = config.FILES_TEMPLATE_NAME
 
     for arg in sys.argv[1:]:
         arguments = str(arg).split(sep='=')
@@ -96,6 +96,7 @@ if __name__ == '__main__':
 
     run_mouse_recorder(
         username=str(params.username),
+        filename_template=str(params.filename_template),
         max_iterations=int(params.max_iterations),
         point_per_file=int(params.point_per_file),
         sleep_time=float(params.sleep_time)
