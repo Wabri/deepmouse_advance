@@ -65,7 +65,7 @@ def run_mouse_recorder(*, username, max_iterations, point_per_file, sleep_time):
         with open(record_filename, 'w') as rf:
             for index in range(N):
                 x, y = mouse.position()
-                rf.write('{},{}'.format(x,y))
+                rf.write('{},{}\r\n'.format(x,y))
                 time.sleep(sleep_time)
                 _progress_bar(index, N)
 
