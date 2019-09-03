@@ -4,6 +4,14 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 
+## DeepMouse Advance [0.0.1] - 03-09-2019
+
+### Add
+- README.md file for the scripts
+
+### Update
+- scripts with minor generics features
+
 ## Mouse Recorder [0.0.2] - 03-09-2019
 
 ### Remove
