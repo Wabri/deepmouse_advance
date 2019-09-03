@@ -5,31 +5,17 @@ defaults: &defaults
     - image: circleci/python:3.7.2
   working_directory: ~/project
 
-setup_venv: &setup_venv
-  run:
-    name: Create Venv
-    command: |
-      chmod +x scripts/setup_venv.sh
-      python3 -m venv env
-      . env/bin/activate
-      pip3 install --upgrade pip
-
 jobs:
   test_mouse_recorder:
     <<: *defaults
     steps:
       - checkout
-      - *setup_venv
       - run:
-          name: Install Requirements
+          name: Install and Run
           command: |
-            source env/bin/activate
-            pip install -r packages/mouse_recorder/requirements.txt
-      - run:
-          name: Try to run
-          command: |
-            source env/bin/activate
-            PYTHONPATH=./packages/mouse_recorder python3 packages/mouse_recorder/mouse_recorder/mouse_rec.py test
+            chmod +x scripts/execute/run.sh
+            ./scripts/execute/run.sh
+
 
 workflows:
   version: 2
