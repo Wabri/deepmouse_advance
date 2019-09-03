@@ -14,8 +14,7 @@ jobs:
           name: Install and Run
           command: |
             chmod +x scripts/execute/run.sh
-            ./scripts/execute/run.sh
-
+            ./scripts/execute/run.sh mouse_recorder --username=circleci --max_iterations=5 --point_per_file=10 --sleep_time=0.1
 
 workflows:
   version: 2
