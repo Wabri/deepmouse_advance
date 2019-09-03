@@ -98,6 +98,6 @@ if __name__ == '__main__':
         username=str(params.username),
         max_iterations=int(params.max_iterations),
         point_per_file=int(params.point_per_file),
-        sleep_time=int(params.sleep_time)
+        sleep_time=float(params.sleep_time)
     )
 
