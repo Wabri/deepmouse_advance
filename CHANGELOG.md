@@ -4,13 +4,41 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 
+## Mouse Recorder [0.0.2] - 03-09-2019
+
+### Remove
+- circleci build useless functionality
+
+### Update
+- run.py: now is possible to change all the parameters by using arguments
+
+## DeepMouse Advance [0.0.1] - 02-09-2019
+
+### Add
+- script source.sh with all the requirements and set up of the development of project
+- requirements.txt with reference of mouse_recorder
+- new entry for gitignore file with the .run file create by pyinstaller
+- some scripts to execute, install and freeze pip requirement for all the project
+
+### Update
+- Readme with first documentation of the project
+- installer script
+
+## Mouse Recorder [0.0.1] - 02-09-2019
+
+### Update
+- mouse_rec.py and rename it with run.py (main reason to create some generics with scripts executions)
+
+### Add
+- the spec pyinstaller file
+
 ## DeepMouse Advance [0.0.1] - 28-08-2019
 ### Update
-- Circleci build to run without setup_venv.sh script
+- circleci build to run without setup_venv.sh script
 ### Remove
-- Script setup_venv.sh
+- script setup_venv.sh
 ### Add
-- New script file to run mouse_rec.py directly from root [view](scripts/mouse_recorder.sh)
+- new script file to run mouse_rec.py directly from root
 
 ## DeepMouse Advance [0.0.1] - 27-08-2019
 ### Init
