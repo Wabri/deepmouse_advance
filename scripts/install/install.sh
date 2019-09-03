@@ -26,15 +26,15 @@ pip install pyinstaller
 _sep_echo 'Remove Useless files and folders'
 rm -rf build dist
 _sep_echo 'Create mouse_rec executable'
-pyinstaller --onefile $package_path/mouse_rec.spec
+pyinstaller --onefile $package_path/$1.spec
 _sep_echo 'Deactivate virtual environment'
 deactivate
 _sep_echo 'Remove environment'
 rm -rf $environment_path
-echo 'Remove build and move executable'
+_sep_echo 'Remove build and move executable'
 rm -rf $2.run
 mv dist/$1 ./$2.run
 rm -rf build dist
 
-_sep_echo
+_sep_echo ''
 

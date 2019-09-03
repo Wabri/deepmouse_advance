@@ -19,12 +19,11 @@ _sep_echo 'Activate Environment'
 . $environment_path/bin/activate
 _sep_echo 'Upgrade pip'
 pip install --upgrade pip
-_sep_echo $separator
 _sep_echo 'Intall requirements of mouse_recorder'
 pip install -r $package_path/requirements.txt
-echo 'Run mouse_recorder with python3 and 2 arguments'
+_sep_echo 'Run '$1
 PYTHONPATH=./$package_path python3 $main_file $@
-echo 'Deactivate environment'
+_sep_echo 'Deactivate environment'
 deactivate
 _sep_echo 'Remove environment'
 rm -rf $environment_path
