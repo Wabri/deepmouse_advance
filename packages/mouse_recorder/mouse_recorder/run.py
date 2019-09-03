@@ -7,7 +7,7 @@ import time
 from mouse_recorder.config import config
 
 
-def progress_bar(current_value, max_value):
+def _progress_bar(current_value, max_value):
     """
     """
     progress = ((current_value + 1) / max_value) * 100
@@ -45,36 +45,59 @@ def _increment_filename(path='.', filename='file', ext='txt', max_digit=6):
     return new_complete_path
 
 
-def run_mouse_recorder(username='Default', username_dataset=False, max_iterations=-1):
+def run_mouse_recorder(*, username, max_iterations, point_per_file, sleep_time):
     """
     """
-    filename_template = 'record_{}'.format(username)
-    if username_dataset:
-        if not os.path.exists('./dataset/{}'.format(username)):
-            os.makedirs('./dataset/{}'.format(username))
-        dataset_path = './dataset/{}/'.format(username)
-    else:
-        if not os.path.exists('./dataset'):
-            os.makedirs('./dataset')
-        dataset_path = './dataset/'
+    if not os.path.exists('./dataset/{}'.format(username)):
+        os.makedirs('./dataset/{}'.format(username))
+    dataset_path = './dataset/{}/'.format(username)
 
     mouse = PyMouse()
     run = 0
-    N = config.POINT_PER_FILE
+
+    N = point_per_file
 
     while max_iterations < 0 or run < max_iterations:
         print('Recording run {}'.format(run))
-        record_filename = _increment_filename(path=dataset_path, filename=filename_template, max_digit=max_iterations)
+        record_filename = _increment_filename(path=dataset_path, max_digit=len(str(max_iterations)))
         run += 1
 
         with open(record_filename, 'w') as rf:
             for index in range(N):
                 x, y = mouse.position()
                 rf.write('{},{}'.format(x,y))
-                time.sleep(config.SLEEP_TIME)
-                progress_bar(index, N)
+                time.sleep(sleep_time)
+                _progress_bar(index, N)
 
         print()
 
 if __name__ == '__main__':
-    run_mouse_recorder(username=sys.argv[1], username_dataset=config.USERNAME_DATASET, max_iterations=config.MAX_ITERATIONS)
+
+    class params:
+        username = 'default'
+        max_iterations = config.MAX_ITERATIONS
+        point_per_file = config.POINT_PER_FILE
+        sleep_time = config.SLEEP_TIME
+
+    for arg in sys.argv[1:]:
+        arguments = str(arg).split(sep='=')
+        try:
+            argument = arguments[0].lstrip('--')
+            try:
+                value = arguments[1]
+            except:
+                value = True
+            if getattr(params, argument):
+                setattr(params, argument, value)
+            else:
+                print("Argument {} don't have references".format(argument))
+        except Exception as e:
+            pass
+
+    run_mouse_recorder(
+        username=str(params.username),
+        max_iterations=int(params.max_iterations),
+        point_per_file=int(params.point_per_file),
+        sleep_time=int(params.sleep_time)
+    )
+
