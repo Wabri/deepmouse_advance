@@ -5,39 +5,11 @@
 
 ### Run Mouse_recorder
 
-#### On Linux
+To run a package read the execute documentations [here](scripts/execute).
 
-In the root run this command:
-
-```Bash
-sh script/execute/mouse_recorder.sh <username> [<total_iteration>]
-```
-
-### Make executable Mouse_recorder
-
-#### On Linux
-
-In the root run this command:
-
-```Bash
-sh script/install/mouse_recorder.sh
-```
-
-This will create a mouse_rec.run on the root folder.
-
-This executable file take 2 argument:
-
-```Bash
-mouse_rec.run <username> [<total_itaration>]
-```
+To make the executable onefile read the install documentations [here](scripts/install/).
 
 ### Development
 
-#### On Linux
-
-In the root run the source command:
-
-```Bash
-source scripts/development_setup/source.sh
-```
+To set up the development environment read the development setup documentations [here](scripts/development_setup/).
 
