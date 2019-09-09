@@ -1,12 +1,21 @@
 
-SLEEP_TIME = 0.01
+class Config:
 
-POINT_PER_FILE = 100
+    USERNAME = 'noname'
 
-MAX_ITERATIONS = 5
+    SLEEP_TIME = 0.01
 
-FILENAME_TEMPLATE = 'set_'
+    POINT_PER_FILE = 100
 
-FILES_EXTENSION_TEMPLATE = 'txt'
+    MAX_ITERATIONS = 5
 
-DATASET_PATH = 'dataset'
+    FILENAME_TEMPLATE = 'set_'
+
+    FILES_EXTENSION_TEMPLATE = 'txt'
+
+    DATASET_PATH = 'dataset'
+
+    MERGE_FILES = True
+
+    REMOVE_SAME = True
+
