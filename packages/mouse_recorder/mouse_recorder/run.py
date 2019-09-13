@@ -4,12 +4,31 @@ import sys
 from pymouse import PyMouse
 import re
 from threading import Event
-from mouse_recorder.config.config import Config
 import signal
 import time
 
+from mouse_recorder.config.config import Config
+from mouse_recorder.merge.merge_dataset import merge_datas
+from mouse_recorder.progress import bar
+
 config = Config()
 stop = Event()
+
+for arg in sys.argv[1:]:
+    arguments = str(arg).split(sep='=')
+    try:
+        argument = arguments[0].lstrip('--').upper()
+        try:
+            value = arguments[1]
+        except:
+            value = True
+        if getattr(config, argument):
+            setattr(config, argument, value)
+        else:
+            print("Argument {} don't have references".format(argument))
+    except Exception as e:
+        pass
+
 
 def _get_last_number_file(files, regex_pattern):
     """
@@ -70,7 +89,7 @@ def run_mouse_recorder(
                     break
                 x, y = mouse.position()
                 rf.write('{},{}\n'.format(x,y))
-                _progress_bar(index, point_per_file)
+                bar.output(index, point_per_file)
                 stop.wait(sleep_time)
         print()
 
@@ -78,24 +97,15 @@ def run_mouse_recorder(
 def _interruption(sig, _frame):
     stop.set()
     if config.MERGE_FILES:
-        _merge_datas()
+        merge_datas(
+            dataset_path='{}/{}'.format(config.DATASET_PATH, config.USERNAME),
+            filename_template=config.FILENAME_TEMPLATE,
+            files_extension_template=config.FILES_EXTENSION_TEMPLATE,
+            output_file_name=config.USERNAME,
+            output_extension=config.FILES_EXTENSION_TEMPLATE
+        )
 
 if __name__ == '__main__':
-
-    for arg in sys.argv[1:]:
-        arguments = str(arg).split(sep='=')
-        try:
-            argument = arguments[0].lstrip('--').upper()
-            try:
-                value = arguments[1]
-            except:
-                value = True
-            if getattr(config, argument):
-                setattr(config, argument, value)
-            else:
-                print("Argument {} don't have references".format(argument))
-        except Exception as e:
-            pass
 
     signal.signal(signal.SIGINT, _interruption)
 

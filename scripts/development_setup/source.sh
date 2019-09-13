@@ -8,6 +8,10 @@ _sep_echo(){
 environment_path=./venv
 scripts_path=./scripts
 
+_sep_echo 'Install python3 venv dependencies'
+sudo apt install python3-venv
+_sep_echo 'Install pip3 dependencies'
+sudo apt install python3-pip
 _sep_echo 'Deactivate precedent environment'
 deactivate
 _sep_echo 'Setting up virtual environment'

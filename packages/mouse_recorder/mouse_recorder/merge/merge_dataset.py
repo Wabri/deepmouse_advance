@@ -1,13 +1,10 @@
-import time
-import glob
+import os
+from glob import glob
+from mouse_recorder.config.config import Config
 
-def _merge(
-        dataset_path='{}/{}'.format(config.DATASET_PATH, config.USERNAME),
-        filename_template=config.FILENAME_TEMPLATE,
-        files_extension_template=config.FILES_EXTENSION_TEMPLATE,
-        remove_same=config.REMOVE_SAME,
-        ordered=True,
-        file_output=config.USERNAME):
+config = Config()
+
+def _merge(dataset_path, filename_template, files_extension_template, remove_same, ordered, file_output):
     """
     """
     files_path = '{}/*.{}'.format(dataset_path, files_extension_template)
@@ -33,16 +30,15 @@ def _merge(
         print('The merged file lines are: {}'.format(len(merged.readlines())))
 
 
-def merge_datas(
+def merge_datas(*,
         dataset_path='{}/{}'.format(config.DATASET_PATH, config.USERNAME),
         filename_template=config.FILENAME_TEMPLATE,
         files_extension_template=config.FILES_EXTENSION_TEMPLATE,
         output_file_name=config.USERNAME,
-        output_extension=config.FILES_EXTENSION_TEMPLATE,
-        sleep_time=config.SLEEP_TIME):
+        output_extension=config.FILES_EXTENSION_TEMPLATE):
     """
     """
-    time.sleep(sleep_time)
+
     if os.path.exists(dataset_path):
         print('Dataset path {}/'.format(dataset_path))
         print('With removing same')
