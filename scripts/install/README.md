@@ -11,3 +11,14 @@ To use it is necessary to specificate what package run and the name of the file 
 sh scripts/install/install.sh <name_of_package> <output_file_name>
 ```
 
+The execution of this script create a *.run*.
+
+## Mouse recorder
+
+Example:
+
+```Bash
+sh scripts/install/install.sh mouse_recorder mouse_recorder_executable
+```
+
+The output file would be *mouse_recorder_executable.run*.
