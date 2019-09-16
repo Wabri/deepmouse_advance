@@ -11,24 +11,24 @@ from mouse_recorder.config.config import Config
 from mouse_recorder.merge.merge_dataset import merge_datas
 from mouse_recorder.progress import bar
 
-config = Config()
+configuration = Config()
 stop = Event()
 
-for arg in sys.argv[1:]:
+for arg in sys.argv[2:]:
     arguments = str(arg).split(sep='=')
+    print(arguments)
+    argument = arguments[0].lstrip('--').upper()
     try:
-        argument = arguments[0].lstrip('--').upper()
-        try:
-            value = arguments[1]
-        except:
-            value = True
-        if getattr(config, argument):
-            setattr(config, argument, value)
-        else:
-            print("Argument {} don't have references".format(argument))
-    except Exception as e:
-        pass
-
+        value = arguments[1]
+    except:
+        value = True
+    if hasattr(configuration, argument):
+        print('Change {} from {}'.format(argument, getattr(configuration, argument)),end=' ')
+        setattr(configuration, argument, value)
+        print('to {}'.format(getattr(configuration, argument)))
+    else:
+        print("Argument {} don't have references".format(argument))
+configuration.reset_type()
 
 def _get_last_number_file(files, regex_pattern):
     """
@@ -41,10 +41,10 @@ def _get_last_number_file(files, regex_pattern):
 
 
 def _increment_filename(
-        dataset_path='{}/{}'.format(config.DATASET_PATH,config.USERNAME),
-        filename_template=config.FILENAME_TEMPLATE,
-        files_extension_template=config.FILES_EXTENSION_TEMPLATE,
-        max_digit=len(str(config.MAX_ITERATIONS))):
+        dataset_path='{}/{}'.format(configuration.DATASET_PATH,configuration.USERNAME),
+        filename_template=configuration.FILENAME_TEMPLATE,
+        files_extension_template=configuration.FILES_EXTENSION_TEMPLATE,
+        max_digit=len(str(configuration.MAX_ITERATIONS))):
     """
     """
     files_extension_template = '.' + files_extension_template
@@ -64,24 +64,31 @@ def _increment_filename(
 
 
 def run_mouse_recorder(
-        username=config.USERNAME,
-        filename_template=config.FILENAME_TEMPLATE,
-        files_extension_template=config.FILES_EXTENSION_TEMPLATE,
-        max_iterations=config.MAX_ITERATIONS,
-        point_per_file=config.POINT_PER_FILE,
-        sleep_time=config.SLEEP_TIME):
+        username=configuration.USERNAME,
+        dataset_path=configuration.DATASET_PATH,
+        filename_template=configuration.FILENAME_TEMPLATE,
+        files_extension_template=configuration.FILES_EXTENSION_TEMPLATE,
+        max_iterations=configuration.MAX_ITERATIONS,
+        point_per_file=configuration.POINT_PER_FILE,
+        sleep_time=configuration.SLEEP_TIME):
     """
     """
-    if not os.path.exists('./dataset/{}'.format(username)):
-        os.makedirs('./dataset/{}'.format(username))
-    dataset_path = './dataset/{}/'.format(username)
+    dataset_path = '{}/{}'.format(dataset_path, username)
+    if not os.path.exists(dataset_path):
+        os.makedirs(dataset_path)
+    dataset_path = '{}/'.format(dataset_path)
 
     mouse = PyMouse()
     run = 0
 
     while (max_iterations < 0 or run < max_iterations) and not stop.is_set():
         print('Recording run {}'.format(run))
-        record_filename = _increment_filename()
+        record_filename = _increment_filename(
+            dataset_path,
+            filename_template,
+            files_extension_template,
+            len(str(max_iterations))
+        )
         run += 1
         with open(record_filename, 'w') as rf:
             for index in range(point_per_file):
@@ -109,7 +116,14 @@ if __name__ == '__main__':
 
     signal.signal(signal.SIGINT, _interruption)
 
-    run_mouse_recorder()
+    run_mouse_recorder(
+        username=configuration.USERNAME,
+        filename_template=configuration.FILENAME_TEMPLATE,
+        files_extension_template=configuration.FILES_EXTENSION_TEMPLATE,
+        max_iterations=configuration.MAX_ITERATIONS,
+        point_per_file=configuration.POINT_PER_FILE,
+        sleep_time=configuration.SLEEP_TIME
+    )
 
     if not stop.is_set():
         os.kill(os.getpid(), signal.SIGINT)
