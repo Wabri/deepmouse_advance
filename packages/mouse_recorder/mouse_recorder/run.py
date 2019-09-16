@@ -30,6 +30,13 @@ for arg in sys.argv[2:]:
         title = 'Change {} from {}'.format(argument, getattr(configuration, argument))
         setattr(configuration, argument, value)
         title += ' to {}'.format(getattr(configuration, argument))
+    elif argument == 'configuration'.upper():
+        if os.path.exists(value):
+            print("A configuration file is passed")
+            configuration = configuration.load_yml(value)
+            break
+        else:
+            print("The configuration path does not exists")
     else:
         title = "Argument {} don't have references".format(argument)
 
@@ -50,11 +57,7 @@ def _get_last_number_file(files, regex_pattern):
     return last_file_number
 
 
-def _increment_filename(
-        dataset_path='{}/{}'.format(configuration.DATASET_PATH,configuration.USERNAME),
-        filename_template=configuration.FILENAME_TEMPLATE,
-        files_extension_template=configuration.FILES_EXTENSION_TEMPLATE,
-        max_digit=len(str(configuration.MAX_ITERATIONS))):
+def _increment_filename(dataset_path,filename_template,files_extension_template,max_digit):
     """
     """
     files_extension_template = '.' + files_extension_template
@@ -73,14 +76,7 @@ def _increment_filename(
     return new_complete_path
 
 
-def run_mouse_recorder(
-        username=configuration.USERNAME,
-        dataset_path=configuration.DATASET_PATH,
-        filename_template=configuration.FILENAME_TEMPLATE,
-        files_extension_template=configuration.FILES_EXTENSION_TEMPLATE,
-        max_iterations=configuration.MAX_ITERATIONS,
-        point_per_file=configuration.POINT_PER_FILE,
-        sleep_time=configuration.SLEEP_TIME):
+def run_mouse_recorder(username, dataset_path, filename_template, files_extension_template, max_iterations, point_per_file, sleep_time):
     """
     """
     dataset_path = '{}/{}'.format(dataset_path, username)
@@ -124,6 +120,7 @@ def _interruption(sig, _frame):
             output_file_name=configuration.OUTPUT_FILE_MERGE,
             output_extension=configuration.OUTPUT_EXTENSION
         )
+    clear_all()
 
 if __name__ == '__main__':
 

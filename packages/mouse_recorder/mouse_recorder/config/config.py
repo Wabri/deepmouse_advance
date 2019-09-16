@@ -1,3 +1,4 @@
+import yaml
 
 class Config:
 
@@ -22,6 +23,14 @@ class Config:
     MERGE_FILES=True
 
     ONLY_MERGE=False
+
+
+    def load_yml(self, path):
+        ## TODO
+        with open(path, 'r') as ymlconfig:
+            config = yaml.load(ymlconfig)
+        for section in config:
+            print(section)
 
     def reset_type(self):
         self.USERNAME=str(self.USERNAME)
