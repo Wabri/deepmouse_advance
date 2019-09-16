@@ -9,25 +9,35 @@ import time
 
 from mouse_recorder.config.config import Config
 from mouse_recorder.merge.merge_dataset import merge_datas
-from mouse_recorder.progress import bar
+from mouse_recorder.terminal.write import *
 
 configuration = Config()
 stop = Event()
 
+number_arguments = len(sys.argv) - 2
+current_argument = 0
+
+clear_all()
 for arg in sys.argv[2:]:
     arguments = str(arg).split(sep='=')
-    print(arguments)
     argument = arguments[0].lstrip('--').upper()
     try:
         value = arguments[1]
     except:
         value = True
+
     if hasattr(configuration, argument):
-        print('Change {} from {}'.format(argument, getattr(configuration, argument)),end=' ')
+        title = 'Change {} from {}'.format(argument, getattr(configuration, argument))
         setattr(configuration, argument, value)
-        print('to {}'.format(getattr(configuration, argument)))
+        title += ' to {}'.format(getattr(configuration, argument))
     else:
-        print("Argument {} don't have references".format(argument))
+        title = "Argument {} don't have references".format(argument)
+
+    progress_bar(current_argument, number_arguments, title=title, leave_title=True)
+    current_argument += 1
+clear_line()
+print()
+
 configuration.reset_type()
 
 def _get_last_number_file(files, regex_pattern):
@@ -82,37 +92,53 @@ def run_mouse_recorder(
     run = 0
 
     while (max_iterations < 0 or run < max_iterations) and not stop.is_set():
-        print('Recording run {}'.format(run))
+        title =  'Recording run {}'.format(run)
         record_filename = _increment_filename(
             dataset_path,
             filename_template,
             files_extension_template,
-            len(str(max_iterations))
+            len(str(max_iterations)) if max_iterations > 0 else 1
         )
-        run += 1
         with open(record_filename, 'w') as rf:
             for index in range(point_per_file):
                 if stop.is_set():
                     break
                 x, y = mouse.position()
                 rf.write('{},{}\n'.format(x,y))
-                bar.output(index, point_per_file)
+                progress_bar(index, point_per_file, title=title)
                 stop.wait(sleep_time)
-        print()
+        clear_line()
+        title = 'Run {} recorded and save with path {}'.format(run, record_filename)
+        print(title)
+        run += 1
 
 
 def _interruption(sig, _frame):
     stop.set()
-    if config.MERGE_FILES:
+    clear_all()
+    if configuration.MERGE_FILES:
         merge_datas(
-            dataset_path='{}/{}'.format(config.DATASET_PATH, config.USERNAME),
-            filename_template=config.FILENAME_TEMPLATE,
-            files_extension_template=config.FILES_EXTENSION_TEMPLATE,
-            output_file_name=config.USERNAME,
-            output_extension=config.FILES_EXTENSION_TEMPLATE
+            dataset_path='{}/{}'.format(configuration.DATASET_PATH, configuration.USERNAME),
+            filename_template=configuration.FILENAME_TEMPLATE,
+            files_extension_template=configuration.FILES_EXTENSION_TEMPLATE,
+            output_file_name=configuration.OUTPUT_FILE_MERGE,
+            output_extension=configuration.OUTPUT_EXTENSION
         )
 
 if __name__ == '__main__':
+
+    if configuration.ONLY_MERGE:
+        clear_all()
+        merge_datas(
+            dataset_path='{}/{}'.format(configuration.DATASET_PATH, configuration.USERNAME),
+            filename_template=configuration.FILENAME_TEMPLATE,
+            files_extension_template=configuration.FILES_EXTENSION_TEMPLATE,
+            output_file_name=configuration.OUTPUT_FILE_MERGE,
+            output_extension=configuration.OUTPUT_EXTENSION
+        )
+        clear_all()
+        exit()
+
 
     signal.signal(signal.SIGINT, _interruption)
 
