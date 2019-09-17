@@ -19,6 +19,12 @@ Arguments:
 - --max_iterations=<integer_value>
 - --point_per_file=<integer_value>
 - --sleep_time=<float_value>
+- --filename_template=<string_value>
+- --files_extension_template=<string_value>
+- --dataset_path=<string_value>
+- --output_file_merge=<string_value>
+- --output_extension=<string_value>
+- --only_merge
 
 Example:
 
@@ -27,5 +33,10 @@ sh scripts/execute/run.sh mouse_recorder \
 			--username=Gabriele \
 		 	--max_iterations=10 \
 			--point_per_file=25 \
-			--sleep_time=0.10
+			--sleep_time=0.10 \
+			--files_extension_template=txt \
+			--dataset_path=/home/user/dataset \
+			--output_file_merge=output \
+			--output_extension=csv \
+			--only_merge
 ```
