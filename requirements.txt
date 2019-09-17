@@ -1,1 +1,2 @@
 -r packages/mouse_recorder/requirements.txt
+-r packages/mouse_recognition/requirements.txt
