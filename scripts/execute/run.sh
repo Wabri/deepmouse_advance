@@ -5,9 +5,10 @@ _sep_echo(){
 	echo $1
 }
 
-package_path=packages/$1
+packages_path=packages
+package_path=$packages_path/$1
 environment_path=$package_path/env
-main_file=$package_path/$1/run.py
+main_file=$package_path/run.py
 
 _sep_echo 'Setting up virtual environment'
 rm -rf $environment_path
@@ -19,7 +20,7 @@ pip install --upgrade pip
 _sep_echo 'Intall requirements of mouse_recorder'
 pip install -r $package_path/requirements.txt
 _sep_echo 'Run '$1
-PYTHONPATH=./$package_path python3 $main_file $@
+PYTHONPATH=./$packages_path python3 $main_file $@
 _sep_echo 'Deactivate environment'
 deactivate
 _sep_echo 'Remove environment'

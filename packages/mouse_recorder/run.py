@@ -14,13 +14,16 @@ from mouse_recorder.terminal.write import *
 configuration = Config()
 stop = Event()
 
-number_arguments = len(sys.argv) - 2
+number_arguments = len(sys.argv)
 current_argument = 0
 
 clear_all()
 print('Load arguments values')
-for arg in sys.argv[2:]:
-    title = 'Load argument {}/{}'.format(current_argument + 1, len(sys.argv) - 2)
+for arg in sys.argv:
+    if not arg[0] == '-':
+        number_arguments -= 1
+        continue
+    title = 'Load argument {}/{}'.format(current_argument + 1, number_arguments)
     couple = str(arg).split(sep='=')
     argument = couple[0].lstrip('--').upper()
     try:
