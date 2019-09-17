@@ -18,34 +18,29 @@ number_arguments = len(sys.argv) - 2
 current_argument = 0
 
 clear_all()
+print('Load arguments values')
 for arg in sys.argv[2:]:
-    arguments = str(arg).split(sep='=')
-    argument = arguments[0].lstrip('--').upper()
+    title = 'Load argument {}/{}'.format(current_argument + 1, len(sys.argv) - 2)
+    couple = str(arg).split(sep='=')
+    argument = couple[0].lstrip('--').upper()
     try:
-        value = arguments[1]
+        value = couple[1]
     except:
         value = True
 
-    if hasattr(configuration, argument):
-        title = 'Change {} from {}'.format(argument, getattr(configuration, argument))
-        setattr(configuration, argument, value)
-        title += ' to {}'.format(getattr(configuration, argument))
-    elif argument == 'configuration'.upper():
-        if os.path.exists(value):
-            print("A configuration file is passed")
-            configuration = configuration.load_yml(value)
-            break
-        else:
-            print("The configuration path does not exists")
-    else:
-        title = "Argument {} don't have references".format(argument)
+    if argument == 'configuration'.upper():
+        clear_all()
+        configuration.load_yml(value)
+        time.sleep(2)
+        break
 
-    progress_bar(current_argument, number_arguments, title=title, leave_title=True)
+    configuration.update_argument(argument, value)
+    progress_bar(current_argument, number_arguments, title=title)
     current_argument += 1
-clear_line()
+    time.sleep(1)
+clear_all()
 print()
 
-configuration.reset_type()
 
 def _get_last_number_file(files, regex_pattern):
     """
@@ -141,6 +136,7 @@ if __name__ == '__main__':
 
     run_mouse_recorder(
         username=configuration.USERNAME,
+        dataset_path=configuration.DATASET_PATH,
         filename_template=configuration.FILENAME_TEMPLATE,
         files_extension_template=configuration.FILES_EXTENSION_TEMPLATE,
         max_iterations=configuration.MAX_ITERATIONS,
