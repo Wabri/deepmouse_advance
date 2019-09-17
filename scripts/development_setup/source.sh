@@ -10,6 +10,10 @@ packages_path=$1
 environment_path=$packages_path/venv
 scripts_path=$root_project/scripts
 
+_sep_echo 'Install python3 venv dependencies'
+sudo apt install python3-venv
+_sep_echo 'Install pip3 dependencies'
+sudo apt install python3-pip
 _sep_echo 'Deactivate precedent environment'
 deactivate
 _sep_echo 'Setting up virtual environment'
@@ -20,7 +24,9 @@ source $environment_path/bin/activate
 _sep_echo 'Upgrade pip'
 pip install --upgrade pip
 _sep_echo 'Install requirements of mouse_recorder'
-pip install -r $packages_path/requirements.txt
+
+pip install -r ./requirements.txt
+
 _sep_echo 'Setting up alias command'
 _sep_echo 'You can use the run command to execute python packages run.py'
 echo '          run <name_package> [<arguments>]'
