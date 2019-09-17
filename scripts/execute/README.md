@@ -15,7 +15,7 @@ sh scripts/execute/run.sh <name_of_package> [<arguments>]
 
 Arguments:
 
-- --username='<string_value>'
+- --username=<string_value>
 - --max_iterations=<integer_value>
 - --point_per_file=<integer_value>
 - --sleep_time=<float_value>
@@ -25,6 +25,9 @@ Arguments:
 - --output_file_merge=<string_value>
 - --output_extension=<string_value>
 - --only_merge
+- --configuration=<string_value>
+
+Warning: if the configuration argument is passed every other arguments are ignore by default.
 
 Example:
 
@@ -39,4 +42,5 @@ sh scripts/execute/run.sh mouse_recorder \
 			--output_file_merge=output \
 			--output_extension=csv \
 			--only_merge
+			--configuration=/path/to/config.yml
 ```

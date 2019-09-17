@@ -31,7 +31,7 @@ for arg in sys.argv[2:]:
     if argument == 'configuration'.upper():
         clear_all()
         configuration.load_yml(value)
-        time.sleep(2)
+        time.sleep(1)
         break
 
     configuration.update_argument(argument, value)
