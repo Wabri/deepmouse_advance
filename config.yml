@@ -1,12 +1,13 @@
 mouse_recorder:
-    USERNAME:'noname'
-    SLEEP_TIME:0.01
-    POINT_PER_FILE:100
-    MAX_ITERATIONS:5
-    FILENAME_TEMPLATE:'set_'
-    FILES_EXTENSION_TEMPLATE:'txt'
-    DATASET_PATH:'dataset'
-    OUTPUT_FILE_MERGE:'output'
-    OUTPUT_EXTENSION:'csv'
-    MERGE_FILES:True
-    ONLY_MERGE:False
+    USERNAME: noname
+    SLEEP_TIME: 0.01
+    POINT_PER_FILE: 100
+    MAX_ITERATIONS: 5
+    FILENAME_TEMPLATE: set_
+    FILES_EXTENSION_TEMPLATE: txt
+    DATASET_PATH: dataset
+    OUTPUT_FILE_MERGE: output
+    OUTPUT_EXTENSION: csv
+    MERGE_FILES: Yes
+    ONLY_MERGE: No
+
