@@ -4,7 +4,7 @@ block_cipher = None
 
 
 a = Analysis(['run.py'],
-             pathex=['env/lib/python3.7/site-packages/', '/home/gab/git/deepmouse_advance'],
+             pathex=['env/lib/python3.7/site-packages/', '/home/gab/git/deepmouse_advance/packages/'],
              binaries=[],
              datas=[],
              hiddenimports=['pymouse,pyyaml'],
