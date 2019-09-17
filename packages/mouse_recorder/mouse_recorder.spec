@@ -3,11 +3,11 @@
 block_cipher = None
 
 
-a = Analysis(['mouse_recorder/run.py'],
+a = Analysis(['run.py'],
              pathex=['env/lib/python3.7/site-packages/', '/home/gab/git/deepmouse_advance'],
              binaries=[],
              datas=[],
-             hiddenimports=['pymouse'],
+             hiddenimports=['pymouse,pyyaml'],
              hookspath=[],
              runtime_hooks=[],
              excludes=[],
