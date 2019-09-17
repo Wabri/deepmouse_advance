@@ -6,8 +6,7 @@ _sep_echo(){
 }
 
 root_project=$(pwd)
-packages_path=$1
-environment_path=$packages_path/venv
+environment_name=venv
 scripts_path=$root_project/scripts
 
 _sep_echo 'Install python3 venv dependencies'
@@ -17,14 +16,15 @@ sudo apt install python3-pip
 _sep_echo 'Deactivate precedent environment'
 deactivate
 _sep_echo 'Setting up virtual environment'
-rm -rf $environment_path
-python3 -m venv $environment_path
+rm -rf $environment_name
+python3 -m venv $environment_name
 _sep_echo 'Activate Environment'
-source $environment_path/bin/activate
+. $environment_name/bin/activate
+which python
+which pip
 _sep_echo 'Upgrade pip'
 pip install --upgrade pip
-_sep_echo 'Install requirements of mouse_recorder'
-
+_sep_echo 'Install requirements of project'
 pip install -r ./requirements.txt
 
 _sep_echo 'Setting up alias command'
