@@ -12,8 +12,7 @@ from mouse_recognition.config.config import Config
 
 configuration = Config()
 configuration.load_yml('config.yml')
-
-print(configuration.COLORS)
+terminal_handler.write.clear_all()
 
 colors = configuration.COLORS
 plt.rcParams['axes.prop_cycle'] = cycler(color=colors)
