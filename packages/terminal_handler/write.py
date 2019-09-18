@@ -27,35 +27,38 @@ def clear_all():
     clear_lines(lines)
 
 
-def progress_bar(current_value, max_value, padding=0, title='', leave_title=False):
+def progress_bar(current_value, max_value, lenght=os.get_terminal_size().columns, padding=0, title='', leave_title=False):
     """
     """
     clear_line()
-    columns = os.get_terminal_size().columns
+    columns = lenght
     total_padding = padding + 11
     bar_spaces = columns - total_padding
     absolute_progress = ((current_value + 1)/max_value) * 100
     progress = absolute_progress / 100 * bar_spaces
     bar = '[{}{}] {:3.0f}%'.format('#'*int(progress + (0 if not absolute_progress == 100 else -1)), ' '*int(bar_spaces - progress), absolute_progress)
-    output = title + '\n' + bar
-    print(output)
+    print(title)
+    clear_line()
+    print(bar)
     move_up() if leave_title and not absolute_progress == 100 else move_up(2)
-    print('') if absolute_progress == 100 else print('', end='\r')
-    #print(title)
-    #columns = os.get_terminal_size().columns
-    #progress = ((current_value + 1) / max_value) * columns
-    #clear_line()
-    #bar = '[{0}{1}] {2:.1f}%'.format('#'*int(progress/2), ' ' * (columns/2-int(progress/2)), progress)
-    #output_string = ((title + '\n') if not title == '' else '')  + bar
-    #print(output_string, end='')
-    #if not title == '': move_up()
-    #print('', end='\r')
-    #if leave_title:
-    #    print(title)
+    None if not absolute_progress == 100 else (print(), clear_line())
 
 if __name__ == '__main__':
     import time
-    for i in range(100):
-        progress_bar(i, 100, padding=150, title='Yolo {}'.format(i), leave_title=False)
-        time.sleep(0.01)
+    for i in range(10):
+        progress_bar(i, 10, title='Yolo {}'.format(i), leave_title=False)
+        time.sleep(0.05)
+    time.sleep(1)
+    for i in range(10):
+        progress_bar(i, 10, title='Yolo {}'.format(i), leave_title=True)
+        time.sleep(0.05)
+    time.sleep(1)
+    for i in range(10):
+        progress_bar(i, 10, lenght=50, title='Yolo {}'.format(i), leave_title=False)
+        time.sleep(0.05)
+    time.sleep(1)
+    for i in range(10):
+        progress_bar(i, 10, lenght=50, padding=20, title='Yolo {}'.format(i), leave_title=False)
+        time.sleep(0.05)
+    time.sleep(1)
 
