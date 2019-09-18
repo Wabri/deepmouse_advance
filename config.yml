@@ -12,12 +12,12 @@ mouse_recorder:
   only_merge: No
 mouse_recognition:
   colors:
-    - '#0aaaaa'
-    - '#baaaaa'
-    - '#2aaaaa'
-    - '#faaaaa'
-    - '#aaaaaa'
-    - '#0aaaaa'
-    - '#Faaaaa'
-    - '#5aaaaa'
-    - '#eaaaaa'
+    - '#0c6575'
+    - '#bbcbcb'
+    - '#23a98c'
+    - '#fc7a70'
+    - '#a07060'
+    - '#003847'
+    - '#FFF7D6'
+    - '#5CA4B5'
+    - '#eeeeee'
