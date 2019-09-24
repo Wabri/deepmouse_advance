@@ -1,4 +1,6 @@
 # Remove temp file of vim
+.vscode/
+.idea/
 *.sw*
 
 # Byte-compiled / optimized / DLL files
@@ -107,3 +109,6 @@ venv.bak/
 
 # mypy
 .mypy_cache/
+
+# Machine learning models
+models/
