@@ -1,5 +1,19 @@
 #!/bin/sh
 
+quiet=0
+
+if [[ $# -ne 0 ]]; then
+  key="$1"
+  case $key in
+    --quiet)
+      quiet=1
+    ;;
+    *)
+      echo 'Not valid arguments'
+    ;;
+  esac
+fi
+
 _sep_echo(){
 	echo '---------------------------'
 	echo $1
@@ -9,35 +23,43 @@ root_project=$(pwd)
 environment_name=venv
 scripts_path=$root_project/scripts
 
-_sep_echo 'Install python3 venv dependencies'
-sudo apt install python3-venv
-_sep_echo 'Install pip3 dependencies'
-sudo apt install python3-pip
-_sep_echo 'Deactivate precedent environment'
-deactivate
-_sep_echo 'Setting up virtual environment'
-rm -rf $environment_name
-python3 -m venv $environment_name
-_sep_echo 'Activate Environment'
-. $environment_name/bin/activate
-which python
-which pip
-_sep_echo 'Upgrade pip'
-pip install --upgrade pip
-_sep_echo 'Install requirements of project'
-pip install -r ./requirements.txt
+do_things(){
+  _sep_echo 'Install python3 venv dependencies'
+  sudo apt install python3-venv
+  _sep_echo 'Install pip3 dependencies'
+  sudo apt install python3-pip
+  _sep_echo 'Deactivate precedent environment'
+  deactivate
+  _sep_echo 'Setting up virtual environment'
+  rm -rf $environment_name
+  python3 -m venv $environment_name
+  _sep_echo 'Activate Environment'
+  . $environment_name/bin/activate
+  which python
+  which pip
+  _sep_echo 'Upgrade pip'
+  pip install --upgrade pip
+  _sep_echo 'Install requirements of project'
+  pip install --progress-bar pretty -r ./requirements.txt
 
-_sep_echo 'Setting up alias command'
-_sep_echo 'You can use the run command to execute python packages run.py'
-echo '          run <name_package> [<arguments>]'
-alias run='cd $root_project ; sh $scripts_path/execute/run.sh'
-_sep_echo 'You can use the make_exe command to create an executable file with pyinstaller'
-echo '          make_exe <name_package>'
-echo 'The new file will be created in the root folder'
-alias make_exe='cd $root_project ; sh $scripts_path/install/install.sh'
-_sep_echo 'You can use the requirements command to create a requirements.txt of the package'
-echo '          requirements <name_package>'
-echo 'The new file will be created in the package folder'
-alias requirements='cd $root_project ; sh $scripts_path/pip/requirements.sh'
+  _sep_echo 'Setting up alias command'
+  _sep_echo 'You can use the run command to execute python packages run.py'
+  echo '          run <name_package> [<arguments>]'
+  alias run='cd $root_project ; sh $scripts_path/execute/run.sh'
+  _sep_echo 'You can use the make_exe command to create an executable file with pyinstaller'
+  echo '          make_exe <name_package>'
+  echo 'The new file will be created in the root folder'
+  alias make_exe='cd $root_project ; sh $scripts_path/install/install.sh'
+  _sep_echo 'You can use the requirements command to create a requirements.txt of the package'
+  echo '          requirements <name_package>'
+  echo 'The new file will be created in the package folder'
+  alias requirements='cd $root_project ; sh $scripts_path/pip/requirements.sh'
 
-_sep_echo ''
+  _sep_echo ''
+}
+
+if [[ $quiet -eq 1 ]] ; then
+  do_things &>/dev/null
+else
+  do_things
+fi
