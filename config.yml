@@ -1,13 +1,23 @@
 mouse_recorder:
-    USERNAME: pane
-    SLEEP_TIME: 0.01
-    POINT_PER_FILE: 100
-    MAX_ITERATIONS: 5
-    FILENAME_TEMPLATE: set_
-    FILES_EXTENSION_TEMPLATE: txt
-    DATASET_PATH: dataset
-    OUTPUT_FILE_MERGE: output
-    OUTPUT_EXTENSION: csv
-    MERGE_FILES: Yes
-    ONLY_MERGE: No
-
+  username: pane
+  sleep_time: 0.01
+  point_per_file: 100
+  max_iterations: 5
+  filename_template: set_
+  files_extension_template: txt
+  dataset_path: dataset
+  output_file_merge: output
+  output_extension: csv
+  merge_files: Yes
+  only_merge: No
+mouse_recognition:
+  colors:
+    - '#0c6575'
+    - '#bbcbcb'
+    - '#23a98c'
+    - '#fc7a70'
+    - '#a07060'
+    - '#003847'
+    - '#FFF7D6'
+    - '#5CA4B5'
+    - '#eeeeee'

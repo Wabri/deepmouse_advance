@@ -5,7 +5,7 @@
 
 All the configuration that can be use are inside the [config.yml file](config.yml).
 
-### Run Mouse_recorder
+### Run packages
 
 To run a package read the execute documentations [here](scripts/execute).
 

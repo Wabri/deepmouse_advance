@@ -1,0 +1,8 @@
+fastai
+matplotlib
+numpy
+Pillow
+kivy
+PyUserInput
+six
+python-xlib

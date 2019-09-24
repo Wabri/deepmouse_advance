@@ -3,6 +3,10 @@
 .idea/
 *.sw*
 
+# Remove vscode metafiles
+.vscode/
+.idea/
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
