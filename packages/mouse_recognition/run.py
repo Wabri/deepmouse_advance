@@ -42,7 +42,7 @@ if __name__ == '__main__':
 
     with warnings.catch_warnings():
         warnings.simplefilter("ignore")
-        learn = load_learner('ai_models', 'fastai_model01.pkl')
+        learn = load_learner('models', 'fastai_model01.pkl')
 
     sequence_len = 800
     n_max_iteration = 10000000

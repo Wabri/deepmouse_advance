@@ -7,7 +7,7 @@ import signal
 import time
 
 from mouse_recorder.config.config import Config
-from mouse_recorder.merge.merge_all_datas import merge_datas
+from mouse_recorder.merge.merge_dataset import merge_datas
 from terminal_handler.write import *
 
 configuration = Config()
