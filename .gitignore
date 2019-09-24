@@ -116,3 +116,10 @@ venv.bak/
 
 # Machine learning models
 models/
+
+# Deepmouse output
+output.txt
+output_ws.txt
+temp.png
+demo.png
+
