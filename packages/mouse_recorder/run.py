@@ -1,5 +1,4 @@
 from glob import glob
-import os
 import sys
 from pymouse import PyMouse
 import re
@@ -8,7 +7,7 @@ import signal
 import time
 
 from mouse_recorder.config.config import Config
-from mouse_recorder.merge.merge_dataset import merge_datas
+from mouse_recorder.merge.merge_all_datas import merge_datas
 from terminal_handler.write import *
 
 configuration = Config()
@@ -55,7 +54,7 @@ def _get_last_number_file(files, regex_pattern):
     return last_file_number
 
 
-def _increment_filename(dataset_path,filename_template,files_extension_template,max_digit):
+def _increment_filename(dataset_path, filename_template, files_extension_template, max_digit):
     """
     """
     files_extension_template = '.' + files_extension_template
@@ -74,7 +73,8 @@ def _increment_filename(dataset_path,filename_template,files_extension_template,
     return new_complete_path
 
 
-def run_mouse_recorder(username, dataset_path, filename_template, files_extension_template, max_iterations, point_per_file, sleep_time):
+def run_mouse_recorder(username, dataset_path, filename_template, files_extension_template, max_iterations,
+                       point_per_file, sleep_time):
     """
     """
     dataset_path = '{}/{}'.format(dataset_path, username)
@@ -86,7 +86,7 @@ def run_mouse_recorder(username, dataset_path, filename_template, files_extensio
     run = 0
 
     while (max_iterations < 0 or run < max_iterations) and not stop.is_set():
-        title =  'Recording run {}'.format(run)
+        progress_bar_title: str = 'Recording run {}'.format(run)
         record_filename = _increment_filename(
             dataset_path,
             filename_template,
@@ -98,12 +98,13 @@ def run_mouse_recorder(username, dataset_path, filename_template, files_extensio
                 if stop.is_set():
                     break
                 x, y = mouse.position()
-                rf.write('{},{}\n'.format(x,y))
-                progress_bar(index, point_per_file, title=title)
+                rf.write('{},{}\n'.format(x, y))
+                progress_bar(index, point_per_file, title=progress_bar_title)
                 stop.wait(sleep_time)
         clear_line()
-        title = 'Run {} recorded and save with path {}'.format(run, record_filename)
-        print(title)
+        record_filename_run = 'Run {} recorded and save with path {}'.format(run, record_filename)
+
+        print(record_filename_run)
         run += 1
 
 
@@ -120,6 +121,7 @@ def _interruption(sig, _frame):
         )
     clear_all()
 
+
 if __name__ == '__main__':
 
     if configuration.ONLY_MERGE:
@@ -133,7 +135,6 @@ if __name__ == '__main__':
         )
         clear_all()
         exit()
-
 
     signal.signal(signal.SIGINT, _interruption)
 
@@ -149,4 +150,3 @@ if __name__ == '__main__':
 
     if not stop.is_set():
         os.kill(os.getpid(), signal.SIGINT)
-
