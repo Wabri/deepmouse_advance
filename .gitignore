@@ -1,4 +1,6 @@
 # Remove temp file of vim
+.vscode/
+.idea/
 *.sw*
 
 # Remove vscode metafiles
@@ -112,5 +114,5 @@ venv.bak/
 # mypy
 .mypy_cache/
 
-# machine learning models
-ai_models/
+# Machine learning models
+models/
