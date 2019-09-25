@@ -51,18 +51,24 @@ _source() {
 	echo 'The python environment is in path '$(which python)
 	echo 'The pip environment is in path '$(which pip)
 
+	# Upgrade pip and install requirements
 	_sep_echo 'Upgrade pip'
 	pip install --upgrade pip
-
 	_sep_echo 'Install requirements of project'
 	pip install -r $package_path/requirements.txt
 
+	# Create aliases
 	_sep_echo 'Create aliases'
 	if [ "$package_path" = "$ROOT" ] ; then
 		alias run='$tools/run.sh --package '
 	else
 		run_file_package=$package_path/run.py
 		alias run='$tools/run.sh --main $run_file_package'
+	fi
+	if [ "$package_path" = "$ROOT" ] ; then
+		alias requirement='$tools/pip-update-requirements.sh --requirements $ROOT/requirements.txt'
+	else
+		alias requirement='$tools/pip-update-requirements.sh --requirements $package_path/requirements.txt'
 	fi
 
 	_sep_echo ''
