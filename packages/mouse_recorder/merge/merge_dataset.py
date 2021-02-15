@@ -1,8 +1,6 @@
-import os
 from glob import glob
 from mouse_recorder.config.config import Config
 from terminal_handler.write import *
-import time
 
 config = Config()
 
